@@ -1,0 +1,8 @@
+language: csharp
+solution: shave.sln
+mono:
+  - latest
+install:
+  - nuget restore shave.sln
+script:
+  - xbuild shave.sln
