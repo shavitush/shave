@@ -104,30 +104,30 @@ namespace shave
 		{
 			var adidas = new List<string>
 			{
-				@"https://www.youtube.com/watch?v=sZKYSsz_v2c",
-				@"https://www.youtube.com/watch?v=McdX0aLz_Ss",
-				@"https://www.youtube.com/watch?v=ZJg-oiCMSt4",
-				@"https://www.youtube.com/watch?v=QfznpaDe7u8",
-				@"https://www.youtube.com/watch?v=-0y1BY7UcaI",
-				@"https://www.youtube.com/watch?v=hksRnR4oIfg",
-				@"https://www.youtube.com/watch?v=vOP1iAzWhkk",
-				@"https://www.youtube.com/watch?v=rZxxH76tUBg",
-				@"https://www.youtube.com/watch?v=lQIrL_xH7tM",
-				@"https://www.youtube.com/watch?v=WdI5y3iwhLU",
-				@"https://www.youtube.com/watch?v=V1tg021PCTg",
-				@"https://www.youtube.com/watch?v=xXyWk7DvhGI",
-				@"https://www.youtube.com/watch?v=rSYkUGeU1RQ",
-				@"https://www.youtube.com/watch?v=-RdFna7r28I",
-				@"https://www.youtube.com/watch?v=6j74OtnnSP8",
-				@"https://www.youtube.com/watch?v=_aHdvd74DWM",
-				@"https://www.youtube.com/watch?v=kWxwgPwdu-M",
-				@"https://www.youtube.com/watch?v=_d1y9CqWy-U",
-				@"https://www.youtube.com/watch?v=QiFBgtgUtfw",
-				@"https://www.youtube.com/watch?v=i6diGdrVAdQ",
-				@"https://www.youtube.com/watch?v=TIVijJWiIrQ"
+				@"sZKYSsz_v2c",
+				@"McdX0aLz_Ss",
+				@"ZJg-oiCMSt4",
+				@"QfznpaDe7u8",
+				@"-0y1BY7UcaI",
+				@"hksRnR4oIfg",
+				@"vOP1iAzWhkk",
+				@"rZxxH76tUBg",
+				@"lQIrL_xH7tM",
+				@"WdI5y3iwhLU",
+				@"V1tg021PCTg",
+				@"xXyWk7DvhGI",
+				@"rSYkUGeU1RQ",
+				@"-RdFna7r28I",
+				@"6j74OtnnSP8",
+				@"_aHdvd74DWM",
+				@"kWxwgPwdu-M",
+				@"_d1y9CqWy-U",
+				@"QiFBgtgUtfw",
+				@"i6diGdrVAdQ",
+				@"TIVijJWiIrQ"
 			};
 
-			await channel.SendMessage($"{user.Mention} - {adidas[Random.Next(0, adidas.Count)]}");
+			await channel.SendMessage($"{user.Mention} - https://www.youtube.com/watch?v={adidas[Random.Next(0, adidas.Count)]}");
 		}
 	}
 }
