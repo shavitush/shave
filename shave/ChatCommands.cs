@@ -33,7 +33,7 @@ namespace shave
 			}
 
 			var found = CommandsList.FirstOrDefault(x => x.Trigger == cmd[0]);
-			found?.TriggerCommand(user, channel, cmd.Length == 2? cmd[1]:null);
+			found?.TriggerCommand(user, channel, cmd.Length == 2? cmd[1]:null, command);
 		}
 
 		public static void AddChatCommands()
@@ -49,7 +49,7 @@ namespace shave
 			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
 
-		private static async void OnHelpCommand(User user, Channel channel, string arguments)
+		private static async void OnHelpCommand(User user, Channel channel, string arguments, string message)
 		{
 			var sb = new StringBuilder();
 			sb.AppendLine($"```rb" + Environment.NewLine + "Commands:");
@@ -71,12 +71,12 @@ namespace shave
 			await user.SendMessage(sb.ToString());
 		}
 
-		private static async void OnPingCommand(User user, Channel channel, string arguments)
+		private static async void OnPingCommand(User user, Channel channel, string arguments, string message)
 		{
 			await channel.SendMessage(user.Mention + " - pong!");
 		}
 
-		private static async void OnClearCommand(User user, Channel channel, string arguments)
+		private static async void OnClearCommand(User user, Channel channel, string arguments, string message)
 		{
 			if(channel.IsPrivate)
 			{
@@ -100,7 +100,7 @@ namespace shave
 			}
 		}
 
-		private static async void OnAdidasCommand(User user, Channel channel, string arguments)
+		private static async void OnAdidasCommand(User user, Channel channel, string arguments, string message)
 		{
 			var adidas = new List<string>
 			{

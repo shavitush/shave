@@ -39,7 +39,7 @@ namespace shave
 			{
 				Console.WriteLine($"{Prefix.Alert} Please exit the program and fill in your bot's token in {General.ConfigPath}.");
 				Console.ReadLine();
-				
+
 				return;
 			}
 
