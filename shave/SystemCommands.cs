@@ -78,11 +78,9 @@ namespace shave
 			Console.Clear();
 		}
 
-		private static async void OnQuitCommand(string arguments)
+		private static void OnQuitCommand(string arguments)
 		{
 			Console.WriteLine($"{Prefix.Alert} Exiting program safely in 3 seconds.");
-
-			await ChatBot.Client.Disconnect();
 
 			var exitTimer = new Timer(3000);
 			exitTimer.Start();
