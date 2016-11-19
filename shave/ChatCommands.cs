@@ -23,9 +23,9 @@ namespace shave
 			CommandsList.Add(command);
 		}
 
-		public static void TriggerCommand(string command, User user, Channel channel)
+		public static void TriggerCommand(Message message, User user, Channel channel)
 		{
-			var cmd = command.Split(new[] { ' ' }, 2);
+			var cmd = message.RawText.Split(new[] { ' ' }, 2);
 
 			if(cmd.Length == 0)
 			{
@@ -33,7 +33,7 @@ namespace shave
 			}
 
 			var found = CommandsList.FirstOrDefault(x => x.Trigger == cmd[0]);
-			found?.TriggerCommand(user, channel, cmd.Length == 2? cmd[1]:null, command);
+			found?.TriggerCommand(user, channel, cmd.Length == 2? cmd[1]:null, message);
 		}
 
 		public static void AddChatCommands()
@@ -49,7 +49,7 @@ namespace shave
 			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
 
-		private static async void OnHelpCommand(User user, Channel channel, string arguments, string message)
+		private static async void OnHelpCommand(User user, Channel channel, string arguments, Message message)
 		{
 			var sb = new StringBuilder();
 			sb.AppendLine($"```rb" + Environment.NewLine + "Commands:");
@@ -71,12 +71,12 @@ namespace shave
 			await user.SendMessage(sb.ToString());
 		}
 
-		private static async void OnPingCommand(User user, Channel channel, string arguments, string message)
+		private static async void OnPingCommand(User user, Channel channel, string arguments, Message message)
 		{
 			await channel.SendMessage(user.Mention + " - pong!");
 		}
 
-		private static async void OnClearCommand(User user, Channel channel, string arguments, string message)
+		private static async void OnClearCommand(User user, Channel channel, string arguments, Message message)
 		{
 			if(channel.IsPrivate)
 			{
@@ -100,7 +100,7 @@ namespace shave
 			}
 		}
 
-		private static async void OnAdidasCommand(User user, Channel channel, string arguments, string message)
+		private static async void OnAdidasCommand(User user, Channel channel, string arguments, Message message)
 		{
 			var adidas = new List<string>
 			{

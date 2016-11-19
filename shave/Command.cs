@@ -22,10 +22,10 @@ namespace shave
 
 	internal class ChatCommand : Command
 	{
-		internal delegate void OnChatCommand(User user, Channel channel, string arguments, string message);
+		internal delegate void OnChatCommand(User user, Channel channel, string arguments, Message message);
 		public event OnChatCommand OnTrigger;
 
-		public void TriggerCommand(User user, Channel channel, string arguments, string message)
+		public void TriggerCommand(User user, Channel channel, string arguments, Message message)
 		{
 			OnTrigger?.Invoke(user, channel, arguments, message);
 		}

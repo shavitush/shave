@@ -34,7 +34,7 @@ namespace shave
 				return;
 			}
 
-			ChatCommands.TriggerCommand(messageEventArgs.Message.RawText, messageEventArgs.User, messageEventArgs.Channel);
+			ChatCommands.TriggerCommand(messageEventArgs.Message, messageEventArgs.User, messageEventArgs.Channel);
 		}
 	}
 }
