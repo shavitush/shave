@@ -22,8 +22,12 @@ namespace shave
 		private static void ClientOnReady(object sender, EventArgs eventArgs)
 		{
 			Console.WriteLine($"{Prefix.Info} Connected to Discord sucessfully! ({Client.CurrentUser.Name}#{Client.CurrentUser.Discriminator})");
+
 			ChatCommands.AddChatCommands();
 			Console.WriteLine($"{Prefix.Info} Registered chat commands.");
+
+			Client.SetGame(Program.Settings.Game);
+			Console.WriteLine($"{Prefix.Info} Now playing: {Program.Settings.Game}");
 		}
 
 		private static void ClientOnMessageReceived(object sender, MessageEventArgs messageEventArgs)

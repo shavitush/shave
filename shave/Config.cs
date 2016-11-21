@@ -7,10 +7,9 @@ namespace shave
 	internal class Config
 	{
 		public string Token { get; set; } = @"<EMPTY>";
-
 		public string CommandPrefix { get; set; } = string.Empty;
-
 		public string CommandSuffix { get; set; } = @"))";
+		public string Game { get; set; } = @"/home/shavit/shave/";
 
 		public void SaveConfig(string path)
 		{
