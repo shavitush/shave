@@ -85,6 +85,8 @@ namespace shave
 		{
 			Console.WriteLine($"{Prefix.Alert} Exiting program safely in 3 seconds.");
 
+			ChatBot.Client.Disconnect();
+
 			var exitTimer = new Timer(3000);
 			exitTimer.Start();
 
