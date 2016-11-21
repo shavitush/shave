@@ -53,10 +53,8 @@ namespace shave
 			AddCommand("invite", OnInviteCommand, "Returns an invite link.");
 			AddCommand("prefix", OnPrefixCommand, "Change the chat bot's command prefix.");
 			AddCommand("suffix", OnSuffixCommand, "Change the chat bot's command suffix.");
-			AddCommand("name", OnNameCommand, "Change the bot's name on Discord.");
 			AddCommand("game", OnGameCommand, "Change the bot's current playing game on Discord.");
 			AddCommand("setgame", OnGameCommand, "Change the bot's current playing game on Discord.");
-			// add avatar changing commands here
 
 			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
@@ -165,20 +163,6 @@ namespace shave
 			}
 
 			ChatCommands.AddChatCommands();
-		}
-
-		private static async void OnNameCommand(string arguments)
-		{
-			if(string.IsNullOrWhiteSpace(arguments))
-			{
-				Console.WriteLine($"{Prefix.Info} The bot's current username is {ChatBot.Client.CurrentUser.Name}.");
-
-				return;
-			}
-
-			await ChatBot.Client.CurrentUser.Edit(string.Empty, arguments);
-			Console.WriteLine($"{Prefix.Info} The bot's new username is {arguments}.");
-			Console.WriteLine($"{Prefix.Info} If the change didn't take effect, you might've hit the cooldown.");
 		}
 
 		private static void OnGameCommand(string arguments)
