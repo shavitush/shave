@@ -40,11 +40,12 @@ namespace shave
 		{
 			CommandsList.Clear();
 
-			AddCommand("help", OnHelpCommand, "Display a list of chat commands.");
+			AddCommand("help", OnHelpCommand, "Displays a list of chat commands.");
 			AddCommand("ping", OnPingCommand, "Pong!");
 			AddCommand("clean", OnClearCommand, "Deletes the last messages sent by the bot. Limited to the past 100 messages.");
 			AddCommand("clear", OnClearCommand, "Deletes the last messages sent by the bot. Limited to the past 100 messages.");
 			AddCommand("adidas", OnAdidasCommand, "Hard bass))) adidas))");
+            AddCommand("tip", OnTipCommand, "Displays a random compliment deticated to the argument.");
 
 			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
@@ -111,5 +112,34 @@ namespace shave
 
 			await channel.SendMessage($"{user.Mention} - https://www.youtube.com/watch?v={adidas[Random.Next(0, adidas.Count)]}");
 		}
-	}
+
+        private static async void OnTipCommand(User user, Channel channel, string arguments, Message message)
+        {
+            var verbs = new List<string>
+            {
+             " finds ",
+             " points out that",
+             " implies "
+            };
+
+            var adj = new List<String>
+            {
+                "'incredibly ",
+                "especially ",
+                "very ",
+                "extremely "
+            };
+
+            var fin = new List<string>
+            {
+                 "well written.",
+                 "funny.",
+                 "insightful.",
+                 "great"
+            };
+
+            await channel.SendMessage(user.Nickname + verbs[Random.Next(0, verbs.Count)] + arguments + "'s message to be " +
+                    adj[Random.Next(0, adj.Count)] + fin[Random.Next(0, fin.Count)]);
+        }
+    }
 }
