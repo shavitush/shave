@@ -45,7 +45,7 @@ namespace shave
 			AddCommand("clean", OnClearCommand, "Deletes the last messages sent by the bot. Limited to the past 100 messages.");
 			AddCommand("clear", OnClearCommand, "Deletes the last messages sent by the bot. Limited to the past 100 messages.");
 			AddCommand("adidas", OnAdidasCommand, "Hard bass))) adidas))");
-            AddCommand("tip", OnTipCommand, "Displays a random compliment deticated to the argument.");
+            AddCommand("tip", OnTipCommand, "Displays a random compliment dedicated to the argument.");
 
 			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
