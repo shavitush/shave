@@ -53,7 +53,10 @@ namespace shave
 			AddCommand("invite", OnInviteCommand, "Returns an invite link.");
 			AddCommand("prefix", OnPrefixCommand, "Change the chat bot's command prefix.");
 			AddCommand("suffix", OnSuffixCommand, "Change the chat bot's command suffix.");
-			// add avatar/name changing commands here
+			AddCommand("name", OnNameCommand, "Change the bot's name on Discord.");
+			AddCommand("game", OnGameCommand, "Change the bot's current playing game on Discord.");
+			AddCommand("setgame", OnGameCommand, "Change the bot's current playing game on Discord.");
+			// add avatar changing commands here
 
 			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
@@ -98,7 +101,7 @@ namespace shave
 
 		private static void OnPrefixCommand(string arguments)
 		{
-			if(string.IsNullOrEmpty(arguments))
+			if(string.IsNullOrWhiteSpace(arguments))
 			{
 				Console.WriteLine($"{Prefix.Info} The current command prefix is \"{Program.Settings.CommandPrefix}\". You can use \"prefix clear\" to clear it.");
 
@@ -131,7 +134,7 @@ namespace shave
 
 		private static void OnSuffixCommand(string arguments)
 		{
-			if(string.IsNullOrEmpty(arguments))
+			if(string.IsNullOrWhiteSpace(arguments))
 			{
 				Console.WriteLine($"{Prefix.Info} The current command suffix is \"{Program.Settings.CommandSuffix}\". You can use \"suffix clear\" to clear it.");
 
@@ -160,6 +163,36 @@ namespace shave
 			}
 
 			ChatCommands.AddChatCommands();
+		}
+
+		private static async void OnNameCommand(string arguments)
+		{
+			if(string.IsNullOrWhiteSpace(arguments))
+			{
+				Console.WriteLine($"{Prefix.Info} The bot's current username is {ChatBot.Client.CurrentUser.Name}.");
+
+				return;
+			}
+
+			await ChatBot.Client.CurrentUser.Edit(string.Empty, arguments);
+			Console.WriteLine($"{Prefix.Info} The bot's new username is {arguments}.");
+			Console.WriteLine($"{Prefix.Info} If the change didn't take effect, you might've hit the cooldown.");
+		}
+
+		private static void OnGameCommand(string arguments)
+		{
+			Program.Settings.Game = arguments;
+			ChatBot.Client.SetGame(Program.Settings.Game);
+			Program.Settings.SaveConfig(General.ConfigPath);
+
+			if(string.IsNullOrWhiteSpace(arguments))
+			{
+				Console.WriteLine($"{Prefix.Info} Current playing game cleared.");
+
+				return;
+			}
+			
+			Console.WriteLine($"{Prefix.Info} The bot's is now playing {Program.Settings.Game}.");
 		}
 	}
 }

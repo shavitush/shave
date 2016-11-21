@@ -52,7 +52,7 @@ namespace shave
 		private static async void OnHelpCommand(User user, Channel channel, string arguments, Message message)
 		{
 			var sb = new StringBuilder();
-			sb.AppendLine($"```rb" + Environment.NewLine + "Commands:");
+			sb.AppendLine("```rb" + Environment.NewLine + "Commands:");
 
 			foreach(var command in CommandsList)
 			{
@@ -60,20 +60,20 @@ namespace shave
 
 				if(command.Description != null)
 				{
-					output += $"\t{command.Description}";
+					output += "\t" + command.Description;
 				}
 
-				sb.AppendLine($"{output}");
+				sb.AppendLine(output);
 			}
 
-			sb.Append(@"```");
+			sb.Append("```");
 
 			await user.SendMessage(sb.ToString());
 		}
 
 		private static async void OnPingCommand(User user, Channel channel, string arguments, Message message)
 		{
-			await channel.SendMessage(user.Mention + " - pong!");
+			await channel.SendMessage($"{user.Mention} - pong!");
 		}
 
 		private static async void OnClearCommand(User user, Channel channel, string arguments, Message message)
@@ -87,7 +87,7 @@ namespace shave
 
 			if(!channel.Server.CurrentUser.GetPermissions(channel).ManageMessages)
 			{
-				await channel.SendMessage("I cannot delete messages without the *Manage Messages* permission.");
+				await channel.SendMessage($"{user.Mention} - I cannot delete messages without the *Manage Messages* permission.");
 
 				return;
 			}
@@ -104,27 +104,9 @@ namespace shave
 		{
 			var adidas = new List<string>
 			{
-				@"sZKYSsz_v2c",
-				@"McdX0aLz_Ss",
-				@"ZJg-oiCMSt4",
-				@"QfznpaDe7u8",
-				@"-0y1BY7UcaI",
-				@"hksRnR4oIfg",
-				@"vOP1iAzWhkk",
-				@"rZxxH76tUBg",
-				@"lQIrL_xH7tM",
-				@"WdI5y3iwhLU",
-				@"V1tg021PCTg",
-				@"xXyWk7DvhGI",
-				@"rSYkUGeU1RQ",
-				@"-RdFna7r28I",
-				@"6j74OtnnSP8",
-				@"_aHdvd74DWM",
-				@"kWxwgPwdu-M",
-				@"_d1y9CqWy-U",
-				@"QiFBgtgUtfw",
-				@"i6diGdrVAdQ",
-				@"TIVijJWiIrQ"
+				@"sZKYSsz_v2c", @"McdX0aLz_Ss", @"ZJg-oiCMSt4", @"QfznpaDe7u8", @"-0y1BY7UcaI", @"hksRnR4oIfg", @"vOP1iAzWhkk",
+				@"rZxxH76tUBg", @"lQIrL_xH7tM", @"WdI5y3iwhLU", @"V1tg021PCTg", @"xXyWk7DvhGI", @"rSYkUGeU1RQ", @"-RdFna7r28I",
+				@"6j74OtnnSP8", @"_aHdvd74DWM", @"kWxwgPwdu-M", @"_d1y9CqWy-U", @"QiFBgtgUtfw", @"i6diGdrVAdQ", @"TIVijJWiIrQ"
 			};
 
 			await channel.SendMessage($"{user.Mention} - https://www.youtube.com/watch?v={adidas[Random.Next(0, adidas.Count)]}");
