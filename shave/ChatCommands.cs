@@ -118,7 +118,7 @@ namespace shave
             var verbs = new List<string>
             {
              " finds ",
-             " points out that",
+             " points out that ",
              " implies "
             };
 
