@@ -124,7 +124,7 @@ namespace shave
 
             var adj = new List<String>
             {
-                "'incredibly ",
+                "incredibly ",
                 "especially ",
                 "very ",
                 "extremely "
@@ -135,10 +135,10 @@ namespace shave
                  "well written.",
                  "funny.",
                  "insightful.",
-                 "great"
+                 "enlightening."
             };
 
-            await channel.SendMessage(user.Nickname + verbs[Random.Next(0, verbs.Count)] + arguments + "'s message to be " +
+            await channel.SendMessage(user.Name + verbs[Random.Next(0, verbs.Count)] + arguments + "'s message to be " +
                     adj[Random.Next(0, adj.Count)] + fin[Random.Next(0, fin.Count)]);
         }
     }
