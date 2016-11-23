@@ -9,7 +9,9 @@ namespace shave
 		public string Token { get; set; } = @"<EMPTY>";
 		public string CommandPrefix { get; set; } = string.Empty;
 		public string CommandSuffix { get; set; } = @"))";
-		public string Game { get; set; } = @"/home/shavit/shave/";
+        public string CstmCommandPrefix { get; set; } = "custom";
+        public string CstmSavePath { get; set; } = @"custom.json";
+        public string Game { get; set; } = @"/home/shavit/shave/";
 
 		public void SaveConfig(string path)
 		{
