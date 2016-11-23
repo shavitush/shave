@@ -8,7 +8,7 @@ namespace shave
 {
 	internal static class ChatCommands
 	{
-		private static readonly List<ChatCommand> CommandsList = new List<ChatCommand>();
+		private static readonly List<ChatCommand> CommandsList = new List<ChatCommand>();        
 		private static readonly Random Random = new Random();
 
 		private static void AddCommand(string trigger, ChatCommand.OnChatCommand ontrigger, string description = null)
@@ -46,8 +46,9 @@ namespace shave
 			AddCommand("clear", OnClearCommand, "Deletes the last messages sent by the bot. Limited to the past 100 messages.");
 			AddCommand("adidas", OnAdidasCommand, "Hard bass))) adidas))");
             AddCommand("tip", OnTipCommand, "Displays a random compliment dedicated to the argument.");
+            AddCommand("c", OnCustomCommand, @"Custom commands handling. Type ""c help"" for more information.");
 
-			CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
+            CommandsList.Sort((x, y) => string.Compare(x.Trigger, y.Trigger, StringComparison.Ordinal));
 		}
 
 		private static async void OnHelpCommand(User user, Channel channel, string arguments, Message message)
@@ -141,5 +142,11 @@ namespace shave
             await channel.SendMessage(user.Name + verbs[Random.Next(0, verbs.Count)] + arguments + "'s message to be " +
                     adj[Random.Next(0, adj.Count)] + fin[Random.Next(0, fin.Count)]);
         }
+
+        private static async void OnCustomCommand(User user, Channel channel, string arguments, Message message)
+        {
+            await channel.SendMessage(CustomCommand.Process(arguments, user));
+        }
+
     }
 }
