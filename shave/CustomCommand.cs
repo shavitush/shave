@@ -91,41 +91,60 @@ namespace shave
         public static string Process(string arguments, User user)
         {
             string name = arguments.Split(new[] { ' ' })[0];
-            string text = arguments.TrimStart(name.ToCharArray());
+            string text = arguments.TrimStart((name + " ").ToCharArray());
 
-            if (name.StartsWith("!") && user.ServerPermissions.ManageMessages)
+            if (name.StartsWith("!") || name.StartsWith("-") && user.ServerPermissions.ManageMessages)
             {
-                name = name.TrimStart('!');
-                for(int i = 0; i < CstmComandsList.Count; i++)
+                bool del = false;
+                if (name.StartsWith("!"))
+                    name = name.TrimStart('!');
+                else
                 {
-                    if(CstmComandsList[i].Name == name)
-                    {
-                        CstmComandsList[i].Text = text;
-                        SaveCommands(CstmComandsList);
-                        return ("The command " + name + " was updated.");
-                    }
+                    name = name.TrimStart('-');
+                    del = true;
                 }
-                CstmComandsList.Add(new CustomCommand(name, text));
-                SaveCommands(CstmComandsList);
-                return ("The command " + name + " was added.");
-            }
 
-            else
-            {
+                if (name == "help")
+                    return ("The command \"help\" can not be changed.");
+
                 for (int i = 0; i < CstmComandsList.Count; i++)
                 {
                     if (CstmComandsList[i].Name == name)
                     {
-                        return (CstmComandsList[i].Text);
+                        if(del)
+                        {
+                            CstmComandsList.RemoveAt(i);
+                            SaveCommands(CstmComandsList);
+                            return ("The command \"" + name + "\" was deleted.");
+                        }
+                        CstmComandsList[i].Text = text;
+                        SaveCommands(CstmComandsList);
+                        return ("The command \"" + name + "\" was updated.");
                     }
                 }
-                return ("The command " + name + " wasn't found.");
+
+                if (del)
+                    return ("The command \"" + name + "\" wasn't found.");
+
+                CstmComandsList.Add(new CustomCommand(name, text));
+                SaveCommands(CstmComandsList);
+                return ("The command \"" + name + "\" was added.");
             }
-            
+
+            for (int i = 0; i < CstmComandsList.Count; i++)
+            {
+                if (CstmComandsList[i].Name == name)
+                {
+                    return (CstmComandsList[i].Text);
+                }
+            }
+            return ("The command \"" + name + "\" wasn't found.");
         }
 
-        
-
-
     }
+
+
+
+
 }
+
