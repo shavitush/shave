@@ -56,7 +56,8 @@ namespace shave
         private static List<CustomCommand> ReadCommands()
         {
 
-            List<CustomCommand> commands = new List<CustomCommand>();   
+            List<CustomCommand> commands = new List<CustomCommand>();
+            commands.Add(new CustomCommand("help", @"Type ""c <command>"" to activate a custom command.Register or update existing commands by typing ""c !<command> <text>"". Delete by typing ""c -<command>""."));
             commands.Add(new CustomCommand("pong", "ping!"));
 
             if (!File.Exists(Program.Settings.CstmSavePath))
