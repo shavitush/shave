@@ -57,7 +57,8 @@ namespace shave
         {
 
             List<CustomCommand> commands = new List<CustomCommand>();
-            commands.Add(new CustomCommand("ping", "pong!"));
+            commands.Add(new CustomCommand("help", @"Type ""c <command>"" to activate a custom command.
+                                           Register or update existing commands by typing ""c !<command> <text>.""));
             commands.Add(new CustomCommand("pong", "ping!"));
 
             if (!File.Exists(Program.Settings.CstmSavePath))
