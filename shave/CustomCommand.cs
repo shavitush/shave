@@ -1,0 +1,157 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Discord;
+using Newtonsoft.Json;
+using System.IO;
+
+namespace shave
+{
+    public class CustomCommand //aka pasta management
+    {
+        private string name;
+        private string text;
+
+        #region Properties
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return text;
+            }
+
+            set
+            {
+                text = value;
+            }
+        }
+
+        #endregion
+
+        public CustomCommand(string name, string text)
+        {
+            this.Name = name;
+            this.Text = text;
+        }
+
+        private static List<CustomCommand> CstmComandsList = ReadCommands();
+
+
+        private static List<CustomCommand> ReadCommands()
+        {
+
+            List<CustomCommand> commands = new List<CustomCommand>();
+            commands.Add(new CustomCommand("help", @"Type ""c <command>"" to activate a custom command. Register or update existing commands by typing ""c !<command> <text>"". Delete by typing ""c -<command>""."));
+            commands.Add(new CustomCommand("pong", "ping!"));
+
+            if (!File.Exists(Program.Settings.CstmSavePath))
+            {
+                SaveCommands(commands);
+            }
+
+            using (var file = File.OpenText(Program.Settings.CstmSavePath))
+            {
+                string json = file.ReadToEnd();
+                commands = JsonConvert.DeserializeObject<List<CustomCommand>>(json);
+            }
+
+            return commands;
+        }
+
+        private static void SaveCommands(List<CustomCommand> commands)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(commands, Formatting.Indented);
+                File.WriteAllText(Program.Settings.CstmSavePath, json);
+            }
+
+            catch (Exception n)
+            {
+                Console.WriteLine($"{Prefix.Error} {n.Message}");
+            }
+        }
+
+        public static string Process(string arguments, User user)
+        {
+            string name = arguments.Split(new[] { ' ' })[0];
+            string text = arguments.TrimStart((name + " ").ToCharArray());
+
+            if (name.StartsWith("!") && user.ServerPermissions.ManageMessages) //update an existing command or add a new one
+            {
+
+                name = name.TrimStart('!');
+
+                if (name == "help")
+                    return ("The command \"help\" can not be changed.");
+                if (text == null)
+                    return ("Cannot save a blank command. To delete a command write \"-<command>\"");
+
+                for (int i = 0; i < CstmComandsList.Count; i++)
+                {
+                    if (CstmComandsList[i].Name == name)
+                    {
+                        CstmComandsList[i].Text = text;
+                        SaveCommands(CstmComandsList);
+                        return ("The command \"" + name + "\" was updated.");
+                    }
+                }
+                CstmComandsList.Add(new CustomCommand(name, text));
+                SaveCommands(CstmComandsList);
+                return ("The command \"" + name + "\" was added.");
+            }
+
+            if (name.StartsWith("-") && user.ServerPermissions.ManageMessages) //delete an existing command
+            {
+
+                name = name.TrimStart('-');
+
+                if (name == "help")
+                    return ("The command \"help\" can not be changed.");
+
+                for (int i = 0; i < CstmComandsList.Count; i++)
+                {
+                    if (CstmComandsList[i].Name == name)
+                    {
+                        CstmComandsList.RemoveAt(i);
+                        SaveCommands(CstmComandsList);
+                        return ("The command \"" + name + "\" was deleted.");
+                    }
+                }
+                return ("The command \"" + name + "\" wasn't found.");
+
+            }
+
+            for (int i = 0; i < CstmComandsList.Count; i++) //return an existing command
+            {
+                if (CstmComandsList[i].Name == name)
+                {
+                    return (CstmComandsList[i].Text);
+                }
+            }
+            return ("The command \"" + name + "\" wasn't found.");
+        }
+
+    }
+
+
+
+
+}
+

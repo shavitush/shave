@@ -81,6 +81,7 @@
     <Compile Include="ChatCommands.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="CustomCommand.cs" />
     <Compile Include="SystemCommands.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="General.cs" />
