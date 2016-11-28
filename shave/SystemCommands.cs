@@ -188,7 +188,7 @@ namespace shave
         {
             if (File.Exists(arguments))
             {
-                ChatBot.Client.CurrentUser.Edit(null, null, null, null, File.OpenRead(arguments), Discord.ImageType.Png);
+                ChatBot.Client.CurrentUser.Edit("", null, null, null, File.OpenRead(arguments), Discord.ImageType.Png);
                 Console.WriteLine("Changed successfully.");
             }
 
