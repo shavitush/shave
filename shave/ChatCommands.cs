@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Discord;
 
 namespace shave
@@ -23,17 +24,20 @@ namespace shave
 			CommandsList.Add(command);
 		}
 
-		public static void TriggerCommand(Message message, User user, Channel channel)
+		public static async Task TriggerCommand(Message message, User user, Channel channel)
 		{
-			var cmd = message.RawText.Split(new[] { ' ' }, 2);
-
-			if(cmd.Length == 0)
+			await Task.Run(() =>
 			{
-				return;
-			}
+				var cmd = message.RawText.Split(new[] { ' ' }, 2);
 
-			var found = CommandsList.FirstOrDefault(x => x.Trigger == cmd[0]);
-			found?.TriggerCommand(user, channel, cmd.Length == 2? cmd[1]:null, message);
+				if(cmd.Length == 0)
+				{
+					return;
+				}
+
+				var found = CommandsList.FirstOrDefault(x => x.Trigger == cmd[0]);
+				found?.TriggerCommand(user, channel, cmd.Length == 2 ? cmd[1] : null, message);
+			});
 		}
 
 		public static void AddChatCommands()
@@ -100,16 +104,16 @@ namespace shave
 			}
 		}
 
+		private static readonly List<string> AdidasList = new List<string>
+		{
+			@"sZKYSsz_v2c", @"McdX0aLz_Ss", @"ZJg-oiCMSt4", @"QfznpaDe7u8", @"-0y1BY7UcaI", @"hksRnR4oIfg", @"vOP1iAzWhkk",
+			@"rZxxH76tUBg", @"lQIrL_xH7tM", @"WdI5y3iwhLU", @"V1tg021PCTg", @"xXyWk7DvhGI", @"rSYkUGeU1RQ", @"-RdFna7r28I",
+			@"6j74OtnnSP8", @"_aHdvd74DWM", @"kWxwgPwdu-M", @"_d1y9CqWy-U", @"QiFBgtgUtfw", @"i6diGdrVAdQ", @"TIVijJWiIrQ"
+		};
+
 		private static async void OnAdidasCommand(User user, Channel channel, string arguments, Message message)
 		{
-			var adidas = new List<string>
-			{
-				@"sZKYSsz_v2c", @"McdX0aLz_Ss", @"ZJg-oiCMSt4", @"QfznpaDe7u8", @"-0y1BY7UcaI", @"hksRnR4oIfg", @"vOP1iAzWhkk",
-				@"rZxxH76tUBg", @"lQIrL_xH7tM", @"WdI5y3iwhLU", @"V1tg021PCTg", @"xXyWk7DvhGI", @"rSYkUGeU1RQ", @"-RdFna7r28I",
-				@"6j74OtnnSP8", @"_aHdvd74DWM", @"kWxwgPwdu-M", @"_d1y9CqWy-U", @"QiFBgtgUtfw", @"i6diGdrVAdQ", @"TIVijJWiIrQ"
-			};
-
-			await channel.SendMessage($"{user.Mention} - https://www.youtube.com/watch?v={adidas[Random.Next(0, adidas.Count)]}");
+			await channel.SendMessage($"{user.Mention} - https://www.youtube.com/watch?v={AdidasList[Random.Next(0, AdidasList.Count)]}");
 		}
 	}
 }

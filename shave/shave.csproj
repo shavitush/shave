@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="ChatBot.cs" />
     <Compile Include="ChatCommands.cs" />
+    <Compile Include="ChatFilter.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="SystemCommands.cs" />
