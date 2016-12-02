@@ -30,7 +30,7 @@ namespace shave
 			Console.WriteLine($"{Prefix.Info} Now playing: {Program.Settings.Game}");
 		}
 
-		private static void ClientOnMessageReceived(object sender, MessageEventArgs messageEventArgs)
+		private static async void ClientOnMessageReceived(object sender, MessageEventArgs messageEventArgs)
 		{
 			// I don't want to catch my own commands!
 			if(messageEventArgs.Message.IsAuthor)
@@ -38,7 +38,12 @@ namespace shave
 				return;
 			}
 
-			ChatCommands.TriggerCommand(messageEventArgs.Message, messageEventArgs.User, messageEventArgs.Channel);
+			await ChatCommands.TriggerCommand(messageEventArgs.Message, messageEventArgs.User, messageEventArgs.Channel);
+
+			if(messageEventArgs.Server.CurrentUser.GetPermissions(messageEventArgs.Channel).ManageMessages && ChatFilter.IsFiltered(messageEventArgs.Message))
+			{
+				await messageEventArgs.Message.Delete();
+			}
 		}
 	}
 }
